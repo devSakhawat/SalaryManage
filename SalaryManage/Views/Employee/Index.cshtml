@@ -1,0 +1,77 @@
+﻿@using SalaryManage.Domain.ViewModel;
+@model IEnumerable<EmployeeIndex>
+
+@{
+   ViewBag.Title = "Employee";
+}
+
+<!-- Employee content -->
+<div class="container-fluid pt-4 px-4">
+   <div class="theme-bg-secondary theme-font-color text-center rounded p-4">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+         <h6 class="mb-0">Employee List</h6>
+         <a class="theme-anchor" asp-controller="Employee" asp-action="Create">Add New Employee</a>
+      </div>
+      <div class="table-responsive">
+         <table class="table text-start align-middle table-bordered table-hover mb-0">
+            <thead>
+               <tr class="text-white theme-font-color">
+                  <th scope="col"><input class="form-check-input" type="checkbox"></th>
+                  <th scope="col">Employee No.</th>
+                  <th scope="col">Photo</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Gender</th>
+                  <th scope="col">Designation</th>
+                  <th scope="col">DateJoined</th>
+                  <th scope="col">City</th>
+                  <th scope="col">Action</th>
+               </tr>
+            </thead>
+            <tbody class="theme-font-color">
+               @foreach (var item in Model)
+               {
+                  var photoPath = "~/Images/" + item.ImageUrl;
+                  <tr>
+                  <td><input class="form-check-input" type="checkbox"></td>
+                  <td>
+                     <a asp-action="Detail" asp-route-Id="@item.Id">@item.EmployeeNo</a>                     
+                     </td>
+                     <td><img src="~/Images/@item.ImageUrl" alt="Photo Not Found" width="50" height="50" /></td>
+                     
+                  <td>@item.FullName</td>
+                  <td>
+                     @if (item.Gender == "1")
+                        {
+                           item.Gender = "Male";
+                        }
+                        else
+                        {
+                           item.Gender = "Female";
+                        }
+                        @item.Gender
+                   </td>
+                  <td>@item.Designation</td>
+                  <td>@item.DateJoined</td>
+                  <td>@item.City</td>
+                  <td>
+                     <a asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-sm btn-primary">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        Update
+                     </a> 
+                     <a asp-action="Detail" asp-route-Id="@item.Id" class="btn btn-sm btn-success">
+                        <i class="fa-sharp fa-solid fa-circle-info"></i>
+                        Detail
+                     </a> 
+                     <a asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-sm btn-danger">
+                        <i class="fa-solid fa-trash"></i>
+                        Delete
+                     </a>
+                  </td>
+               </tr> 
+               }
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>
+<!-- Employee content -->

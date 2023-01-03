@@ -1,0 +1,170 @@
+﻿@using SalaryManage.Domain.ViewModel
+@model EmployeeEdit
+@{
+   ViewData["Title"] = "Edit";
+}
+
+<!-- Employee content -->
+<div class="container-fluid pt-4 px-4">
+   <div class="row g-4">
+      <div class="col-sm-12 col-xl-12">
+         <div class="theme-bg-secondary theme-font-color rounded h-100 p-4">
+            <h6 class="mb-4">Edit Employee</h6>
+            <form method="post" enctype="multipart/form-data" asp-action="Edit" class="editEmployee">
+
+               <div class="row mb-3">
+                  <label for="employeeNo" class="col-sm-2 col-form-label" asp-for="EmployeeNo"></label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control theme-black" id="employeeNo" asp-for="EmployeeNo" placeholder="Enter EmployeeNo.." />
+                     <span asp-validation-for="EmployeeNo" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="firstName" class="col-sm-2 col-form-label" asp-for="FirstName"></label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control theme-black" id="firstName" asp-for="FirstName" placeholder="Enter First Name.." />
+                     <span asp-validation-for="FirstName" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="middleName" class="col-sm-2 col-form-label" asp-for="MiddleName"></label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control theme-black" id="middleName" asp-for="MiddleName" placeholder="Enter Middle Name.." />
+                     <span asp-validation-for="MiddleName" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="lastName" class="col-sm-2 col-form-label" asp-for="LastName"></label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control theme-black" id="lastName" asp-for="LastName" placeholder="Enter LastName.." />
+                     <span asp-validation-for="LastName" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="gender" class="col-sm-2 col-form-label" asp-for="Gender"></label>
+                  <div class="col-sm-10">
+                     <select class="form-select theme-black" aria-label="Default select example" id="gender" asp-for="Gender">
+                        <option selected>Select Gender</option>
+                        <option value="1">Male</option>
+                        <option value="2">Femal</option>
+                     </select>
+                     <span asp-validation-for="Gender" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="dob" class="col-sm-2 col-form-label" asp-for="DOB"></label>
+                  <div class="col-sm-10">
+                     <input type="date" class="form-control theme-black" id="dob" asp-for="DOB" />
+                     <span asp-validation-for="DOB" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="dateJoined" class="col-sm-2 col-form-label" asp-for="DateJoined"></label>
+                  <div class="col-sm-10">
+                     <input type="date" class="form-control theme-black" id="dateJoined" asp-for="DateJoined" />
+                     <span asp-validation-for="DateJoined" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="phone" class="col-sm-2 col-form-label" asp-for="Phone"></label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control theme-black" id="Phone" asp-for="Phone" placeholder="Enter Phone No.." />
+                     <span asp-validation-for="DateJoined" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="designation" class="col-sm-2 col-form-label" asp-for="Designation"></label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control theme-black" id="designation" asp-for="Designation" placeholder="Enter Designation.." />
+                     <span asp-validation-for="Designation" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="email" class="col-sm-2 col-form-label" asp-for="Email"></label>
+                  <div class="col-sm-10">
+                     <input type="email" class="form-control theme-black" id="email" asp-for="Email" placeholder="Enter Email.." />
+                     <span asp-validation-for="Email" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="nationalInsuranceNo" class="col-sm-2 col-form-label" asp-for="NationalInsuranceNo"></label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control theme-black" id="nationalInsuranceNo" asp-for="NationalInsuranceNo" placeholder="Enter NationalInsuranceNo.." />
+                     <span asp-validation-for="NationalInsuranceNo" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="paymentMethod" class="col-sm-2 col-form-label" asp-for="PaymentMethod"></label>
+                  <div class="col-sm-10">
+                     <select class="form-control theme-black" id="paymentMethod" asp-for="PaymentMethod" asp-items="Html.GetEnumSelectList<SalaryManage.Domain.Entity.PaymentMethod>()"></select>
+                     <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="studentLoan" class="col-sm-2 col-form-label" asp-for="StudentLoan"></label>
+                  <div class="col-sm-10">
+                     <select class="form-control theme-black" id="studentLoan" asp-for="StudentLoan" asp-items="Html.GetEnumSelectList<SalaryManage.Domain.Entity.StudentLoan>()"></select>
+                     <span asp-validation-for="StudentLoan" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="unionMember" class="col-sm-2 col-form-label" asp-for="UnionMember"></label>
+                  <div class="col-sm-10">
+                     <select class="form-control theme-black" id="unionMember" asp-for="UnionMember" asp-items="Html.GetEnumSelectList<SalaryManage.Domain.Entity.UnionMember>()"></select>
+                     <span asp-validation-for="UnionMember" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="Address" class="col-sm-2 col-form-label" asp-for="Address"></label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control theme-black" id="address" asp-for="Address" placeholder="Enter Address.." />
+                     <span asp-validation-for="Address" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="city" class="col-sm-2 col-form-label" asp-for="City"></label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control theme-black" id="city" asp-for="City" placeholder="Enter City.." />
+                     <span asp-validation-for="City" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="Postcode" class="col-sm-2 col-form-label" asp-for="Postcode"></label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control theme-black" id="city" asp-for="Postcode" placeholder="Enter Postcode.." />
+                     <span asp-validation-for="Postcode" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="formFile" class="col-sm-2 col-form-label" asp-for="ImageUrl"></label>
+                  <div class="col-sm-10">
+                     <input class="form-control theme-black" id="formFile" asp-for="ImageUrl">
+                     <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <button type="submit" class="btn btn-success"><i class="fas fa-plus-square"></i> &nbsp;Update </button>
+               <a asp-action="Index" class="btn btn-primary"><i class="fas fa-caret-square-left"></i> &nbsp;Back </a>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- Employee content -->

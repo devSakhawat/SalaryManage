@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SalaryManage.Domain.ViewModel
 {
-   public class EmployeeCreate
+   public class EmployeeCreate : BaseModel
    {
       public int Id { get; set; }
 
@@ -39,7 +39,7 @@ namespace SalaryManage.Domain.ViewModel
       public IFormFile ImageUrl { get; set; }
 
       [DataType(DataType.Date), Display(Name = "Date Of Birth")]
-      public DateTime DOB { get; set; }
+      public DateTime DOB { get; set; } = DateTime.UtcNow;
 
       [DataType(DataType.Date), Display(Name = "Date Joined")]
       public DateTime DateJoined { get; set; } = DateTime.UtcNow;

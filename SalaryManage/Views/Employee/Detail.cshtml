@@ -1,0 +1,189 @@
+﻿@using SalaryManage.Domain.ViewModel;
+@model EmployeeDetail
+
+@{
+   ViewBag.Title = "Detail";
+}
+<style>
+   .imgUrl p {
+       display: flex;
+       align-items: center;
+       height: 100%;
+   }
+</style>
+
+
+<!-- Employee Detail content -->
+<div class="container-fluid pt-4 px-4">
+   <div class="theme-bg-secondary theme-font-color text-center rounded p-4">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+         <h6 class="mb-0">@Model.FullName Detail</h6>
+      </div>
+
+      <div class="employeeDetail text-start">
+         <div class="row mb-2">
+            <div class="col-sm-6">
+               <div class="row mb-3">
+                  <div class="col-sm-4">
+                     <input asp-for="Id" hidden />
+                     <p> @Html.DisplayNameFor(Model => Model.EmployeeNo)</p>
+                  </div>
+                  <div class="col-sm-8">
+                     <p>@Html.DisplayFor(model => model.EmployeeNo)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-4">
+                     <p> @Html.DisplayNameFor(Model => Model.Gender):</p>
+                  </div>
+                  <div class="col-sm-8">
+                     <p>
+                        @if (Model.Gender == "1")
+                        {
+                           Model.Gender = "Male";
+                        }
+                        else
+                        {
+                           Model.Gender = "Female";
+                        }
+                        @Model.Gender
+                     </p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-4">
+                     <p> @Html.DisplayNameFor(Model => Model.DateJoined)</p>
+                  </div>
+                  <div class="col-sm-8">
+                     <p> @Html.DisplayFor(Model => Model.DateJoined)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-4">
+                     <p> @Html.DisplayNameFor(Model => Model.Designation)</p>
+                  </div>
+                  <div class="col-sm-8">
+                     <p> @Html.DisplayFor(Model => Model.Designation)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-4">
+                     <p> @Html.DisplayNameFor(Model => Model.NationalInsuranceNo)</p>
+                  </div>
+                  <div class="col-sm-8">
+                     <p> @Html.DisplayFor(Model => Model.NationalInsuranceNo)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-2">
+                     <p> @Html.DisplayNameFor(Model => Model.StudentLoan)</p>
+                  </div>
+                  <div class="col-sm-4">
+                     <p> @Html.DisplayFor(Model => Model.StudentLoan)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-4">
+                     <p> @Html.DisplayNameFor(Model => Model.Address)</p>
+                  </div>
+                  <div class="col-sm-8">
+                     <p> @Html.DisplayFor(Model => Model.Address)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-2">
+                     <p> @Html.DisplayNameFor(Model => Model.Passcode)</p>
+                  </div>
+                  <div class="col-sm-4">
+                     <p> @Html.DisplayFor(Model => Model.Passcode)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-4">
+                     <p> @Html.DisplayNameFor(Model => Model.City)</p>
+                  </div>
+                  <div class="col-sm-8">
+                     <p>@Html.DisplayFor(model => model.City)</p>
+                  </div>
+               </div>
+            </div>
+
+            <div class="col-sm-6">
+               <div class="row mb-3">                     
+                  <div class="col-sm-4">
+                     <p> @Html.DisplayNameFor(Model => Model.FullName)</p>
+                  </div>
+                  <div class="col-sm-8">
+                     <p>@Html.DisplayFor(model => model.FullName)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-4">
+                     <p> @Html.DisplayNameFor(Model => Model.DOB)</p>
+                  </div>
+                  <div class="col-sm-8">
+                     <p>@Html.DisplayFor(model => model.DOB)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-4">
+                     <p> @Html.DisplayNameFor(Model => Model.Phone)</p>
+                  </div>
+                  <div class="col-sm-8">
+                     <p>@Html.DisplayFor(model => model.Phone)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-4">
+                     <p> @Html.DisplayNameFor(Model => Model.Email)</p>
+                  </div>
+                  <div class="col-sm-8">
+                     <p>@Html.DisplayFor(model => model.Email)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-2">
+                     <p> @Html.DisplayNameFor(Model => Model.UnionMember)</p>
+                  </div>
+                  <div class="col-sm-4">
+                     <p>@Html.DisplayFor(model => model.UnionMember)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-2">
+                     <p> @Html.DisplayNameFor(Model => Model.City)</p>
+                  </div>
+                  <div class="col-sm-4">
+                     <p>@Html.DisplayFor(model => model.City)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-4 imgUrl">
+                     <p> @Html.DisplayNameFor(Model => Model.ImageUrl)</p>
+                  </div>
+                  <div class="col-sm-8">
+                     <img src="~/Images/@Model.ImageUrl" class="img-thumbnail" alt="Photo Not Found" width="80%" />
+                  </div>
+               </div>
+            
+            </div>
+         </div>
+         <a asp-action="Index" class="btn btn-primary"><i class="fas fa-caret-square-left"></i> &nbsp;Back </a>
+      </div>
+   </div>
+</div>
+<!-- Employee content -->

@@ -20,9 +20,9 @@ namespace SalaryManagement.Infrastructure.Repositories
 
       #region Employee
       private IEmployeeRepository employeeRepository;
-      public IEmployeeRepository EmployeeRepository 
+      public IEmployeeRepository EmployeeRepository
       {
-         get 
+         get
          {
             if (employeeRepository == null)
                employeeRepository = new EmployeeRepository(context);

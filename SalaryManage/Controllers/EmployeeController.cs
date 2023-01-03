@@ -1,22 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting.Internal;
-using Microsoft.VisualBasic;
 using SalaryManage.Domain.Entity;
 using SalaryManage.Domain.ViewModel;
 using SalaryManagement.Infrastructure.Constracts;
-using SalaryManagement.Infrastructure.Repositories;
-using System.Diagnostics;
-using System.Net;
-using System.Numerics;
-using System.Reflection;
 
 namespace SalaryManage.Controllers
 {
    public class EmployeeController : Controller
    {
       private readonly IUnitOfWork context;
-      private readonly HostingEnvironment hosting;
-      public EmployeeController(IUnitOfWork context, HostingEnvironment hosting)
+      private IWebHostEnvironment hosting;
+
+      public EmployeeController(IUnitOfWork context, IWebHostEnvironment hosting)
       {
          this.context = context;
          this.hosting = hosting;
@@ -33,12 +27,25 @@ namespace SalaryManage.Controllers
 
       [HttpPost]
       [ValidateAntiForgeryToken]
-      public async Task<IActionResult> Create(EmployeeCreate model)
+      public async Task<IActionResult> Create(/*IFormFile userFile, */EmployeeCreate model)
       {
          if (ModelState.IsValid)
          {
             try
             {
+               string fileName = "";
+               if (model.ImageUrl != null && model.ImageUrl.Length > 0)
+               {
+                  string uploadFolder = Path.Combine(hosting.WebRootPath, "Images");
+                  if (!Directory.Exists(uploadFolder))
+                  {
+                     Directory.CreateDirectory(uploadFolder);
+                  }
+                  string fileExtension = Path.GetExtension(model.ImageUrl.FileName);
+                  fileName = DateTime.UtcNow.ToString("yyyyMMssfff") + "_" + model.EmployeeNo + fileExtension;
+                  string filePath = Path.Combine(uploadFolder, fileName);
+                  await model.ImageUrl.CopyToAsync(new FileStream(filePath, FileMode.Create));
+               }
                var employee = new Employee
                {
                   Id = model.Id,
@@ -58,46 +65,54 @@ namespace SalaryManage.Controllers
                   Address = model.Address,
                   City = model.City,
                   Phone = model.Phone,
-                  Designation = model.Designation
+                  Designation = model.Designation,
+                  Passcode = model.Postcode,
+                  ImageUrl = fileName
                };
-               if (model.ImageUrl != null && model.ImageUrl.Length > 0)
-               {
-                  var uploadDir = @"images/employee";
-                  if (!Directory.Exists(uploadDir))
-                     Directory.CreateDirectory(uploadDir);
-
-                  var fileName = Path.GetFileNameWithoutExtension(model.ImageUrl.FileName);
-                  var extension = Path.GetExtension(model.ImageUrl.FileName);
-                  fileName = DateTime.UtcNow.ToString("F") + fileName + extension;
-                  var filePath = Path.Combine(hosting.ContentRootPath, uploadDir, fileName);
-                  await model.ImageUrl.CopyToAsync(new FileStream(filePath, FileMode.Create));
-                  employee.ImageUrl = "/" + uploadDir + "/" + fileName;
-               }
+               context.EmployeeRepository.Add(employee);
+               await context.SaveChangesAsync();
             }
             catch (Exception)
             {
                throw;
             }
          }
-         return View();
+         return RedirectToAction("Index");
       }
       #endregion
 
       #region Index
       public IActionResult Index()
       {
+         //var employeeList = await context.EmployeeRepository.QueryAsync(e => e.IsDeleted == false);
+
+         //EmployeeIndex employees = new EmployeeIndex();
+
+         //foreach (var employee in employeeList)
+         //{
+         //   employees.Id = employee.Id;
+         //   employees.EmployeeNo = employee.EmployeeNo;
+         //   employees.FullName = employee.FullName;
+         //   employees.Gender = employee.Gender;
+         //   employees.ImageUrl = employee.ImageUrl;
+         //   employees.DateJoined = employee.DateJoined;
+         //   employees.Designation = employee.Designation;
+         //   employees.City = employee.City;
+         //};
+
          var employees = context.EmployeeRepository.GetEmployees().Select(
             employee => new EmployeeIndex
-            { 
+            {
                Id = employee.Id,
-               EmployeeNo= employee.EmployeeNo,
-               FullName= employee.FullName,
+               EmployeeNo = employee.EmployeeNo,
+               FullName = employee.FullName,
                Gender = employee.Gender,
                Designation = employee.Designation,
-               City= employee.City,
-               DateJoined= employee.DateJoined,
-               ImageUrl= employee.ImageUrl
+               City = employee.City,
+               DateJoined = employee.DateJoined,
+               ImageUrl = employee.ImageUrl
             }).ToList();
+
          return View(employees);
       }
       #endregion
@@ -116,7 +131,7 @@ namespace SalaryManage.Controllers
             EmployeeNo = employee.EmployeeNo,
             FirstName = employee.FirstName,
             MiddleName = employee.MiddleName,
-            LastName = employee.LastName,            
+            LastName = employee.LastName,
             DOB = employee.DOB,
             Gender = employee.Gender,
             Phone = employee.Phone,
@@ -137,7 +152,7 @@ namespace SalaryManage.Controllers
 
       [HttpPost]
       [ValidateAntiForgeryToken]
-      public async Task<IActionResult> Editd(EmployeeEdit model)
+      public async Task<IActionResult> Edit(EmployeeEdit model)
       {
          if (ModelState.IsValid)
          {
@@ -146,10 +161,26 @@ namespace SalaryManage.Controllers
                var employee = await context.EmployeeRepository.FirstOrDefaultAsync(e => e.Id == model.Id && e.IsDeleted == false);
                if (employee == null)
                   return NotFound();
+
+               string fileName = "";
+               if (model.ImageUrl != null && model.ImageUrl.Length > 0)
+               {
+                  string uploadFolder = Path.Combine(hosting.WebRootPath, "Images");
+                  if (!Directory.Exists(uploadFolder))
+                  {
+                     Directory.CreateDirectory(uploadFolder);
+                  }
+                  string fileExtension = Path.GetExtension(model.ImageUrl.FileName);
+                  fileName = DateTime.UtcNow.ToString("yyyyMMssfff") + "_" + model.EmployeeNo + fileExtension;
+                  string filePath = Path.Combine(uploadFolder, fileName);
+                  await model.ImageUrl.CopyToAsync(new FileStream(filePath, FileMode.Create));
+               }
+
                employee.EmployeeNo = model.EmployeeNo;
                employee.FirstName = model.FirstName;
                employee.MiddleName = model.MiddleName;
-               employee.LastName = model.LastName;     
+               employee.LastName = model.LastName;
+               employee.FullName = model.FullName;
                employee.DOB = model.DOB;
                employee.Gender = model.Gender;
                employee.Phone = model.Phone;
@@ -163,21 +194,7 @@ namespace SalaryManage.Controllers
                employee.Address = model.Address;
                employee.City = model.City;
                employee.Passcode = model.Postcode;
-
-               if (employee.ImageUrl != null && employee.ImageUrl.Length > 0)
-               {
-                  var uploadDir = @"images/employee";
-                  if (!Directory.Exists(uploadDir))
-                     Directory.CreateDirectory(uploadDir);
-
-                  var fileName = Path.GetFileNameWithoutExtension(model.ImageUrl.FileName);
-                  var extentsion = Path.GetExtension(model.ImageUrl.FileName);
-                  fileName = DateTime.UtcNow.ToString("F")+ fileName + extentsion.ToLower();
-
-                  var contentPath = Path.Combine(hosting.ContentRootPath, uploadDir, fileName);
-                  await model.ImageUrl.CopyToAsync(new FileStream(contentPath, FileMode.Create));
-                  employee.ImageUrl = "/" + uploadDir + "/" + fileName;
-               }
+               employee.ImageUrl = fileName;
                context.EmployeeRepository.Update(employee);
                await context.SaveChangesAsync();
                return RedirectToAction("Index");
@@ -253,8 +270,8 @@ namespace SalaryManage.Controllers
             throw;
          }
       }
-      
-      [HttpDelete]
+
+      [HttpPost]
       [ValidateAntiForgeryToken]
       public async Task<IActionResult> Delete(EmployeeDelete model)
       {
@@ -266,6 +283,7 @@ namespace SalaryManage.Controllers
 
          //// hard delete
          //context.EmployeeRepository.Delete(employee);
+         context.EmployeeRepository.Update(employee);
          await context.SaveChangesAsync();
          return RedirectToAction(nameof(Index));
       }

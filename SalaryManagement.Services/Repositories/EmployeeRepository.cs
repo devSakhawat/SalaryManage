@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SalaryManage.Data;
+﻿using SalaryManage.Data;
 using SalaryManage.Domain.Entity;
 using SalaryManagement.Infrastructure.Constracts;
 
@@ -13,7 +12,7 @@ namespace SalaryManagement.Infrastructure.Repositories
 
       public IEnumerable<Employee> GetEmployees()
       {
-         return context.Employees;
+         return context.Employees.Where(e => e.IsDeleted == false);
       }
 
       public decimal StudentLoadnRepaymentAmout(int Id, decimal totalAmount)
