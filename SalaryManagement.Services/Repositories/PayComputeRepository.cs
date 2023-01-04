@@ -28,6 +28,12 @@ namespace SalaryManagement.Infrastructure.Repositories
          return allTaxYear;
       }
 
+      // All Payment Record
+      public IEnumerable<PaymentRecord> GetPaymentRecords()
+      {
+         return context.PaymentRecords.Where(pr => pr.IsDeleted == false);
+      }
+
       // OverTimeHours calculation = Total(hoursWorked) - Total(contractualHours)
       public decimal OverTimeHours(decimal hoursWorked, decimal contractualHours)
       {

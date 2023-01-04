@@ -36,7 +36,7 @@ namespace SalaryManagement.Infrastructure.Repositories
       #region GetAll
       public IEnumerable<T> GetAll()
       {
-         return context.Set<T>().ToList();
+         return context.Set<T>().AsQueryable().AsNoTracking().ToList();
       }
       #endregion
 

@@ -7,6 +7,7 @@ namespace SalaryManagement.Infrastructure.Constracts
    {
       TaxYear GetTaxYearById(int id);
       IEnumerable<SelectListItem> GetAllTaxYear();
+      IEnumerable<PaymentRecord> GetPaymentRecords();
       decimal OverTimeHours(decimal hoursWorked, decimal contractualHours);      
       decimal OverTimeRate(decimal hourlyRate);
       decimal OverTimeEarnings(decimal overtimeRate, decimal overtimeHours);

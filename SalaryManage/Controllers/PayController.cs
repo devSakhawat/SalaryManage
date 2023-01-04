@@ -76,7 +76,7 @@ namespace SalaryManage.Controllers
       #region PaymentRecordIndex
       public IActionResult Index()
       {
-         var payRecord = context.PayComputeRepository.GetAll().Select(async pay => new PaymentRecordIndex 
+         var payRecord = context.PayComputeRepository.GetPaymentRecords().Select(pay => new PaymentRecordIndex 
          { 
             Id= pay.Id,
             EmployeeId = pay.EmployeeId,
