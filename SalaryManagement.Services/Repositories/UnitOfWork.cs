@@ -31,5 +31,62 @@ namespace SalaryManagement.Infrastructure.Repositories
          }
       }
       #endregion
+
+      #region PaymentCompute
+      private IPayComputeRepository payComputeRepository;
+      public IPayComputeRepository PayComputeRepository
+      {
+         get
+         {
+            if (payComputeRepository == null)
+               payComputeRepository = new PayComputeRepository(context);
+
+            return payComputeRepository;
+         }
+      }
+      #endregion
+
+      #region TaxYear
+      private ITaxYearRepository taxYearRepository;
+
+      public ITaxYearRepository TaxYearRepository
+      {
+         get
+         {
+            if (taxYearRepository == null)
+               taxYearRepository = new TaxYearRepository(context);
+
+            return taxYearRepository;
+         }
+      }
+      #endregion
+
+      #region Tax
+      private ITaxRepository taxRepository;
+      public ITaxRepository TaxRepository
+      {
+         get
+         {
+            if (taxRepository == null)
+               taxRepository = new TaxRepository(context);
+
+            return TaxRepository;
+         }
+      }
+      #endregion
+
+      #region NationalInsuranceContribution
+      private INationalInsuranceContributionRepository nationalInsuranceContributionRepository;
+      public INationalInsuranceContributionRepository NationalInsuranceContributionRepository
+      {
+         get
+         { 
+            if(nationalInsuranceContributionRepository == null)
+               nationalInsuranceContributionRepository = new NationalInsuranceContributionRepository(context);
+
+            return nationalInsuranceContributionRepository;
+         }
+      }
+      #endregion
    }
 }

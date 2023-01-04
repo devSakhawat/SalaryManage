@@ -26,6 +26,20 @@ namespace SalaryManagement.Infrastructure.Repositories
       }
       #endregion
 
+      #region GetById
+      public T GetById(int id)
+      {
+         return context.Set<T>().Find(id);
+      }
+      #endregion
+
+      #region GetAll
+      public IEnumerable<T> GetAll()
+      {
+         return context.Set<T>().ToList();
+      }
+      #endregion
+
       #region QueryAsync
       public virtual async Task<IEnumerable<T>> QueryAsync(Expression<Func<T, bool>> predicate)
       {

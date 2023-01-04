@@ -13,6 +13,10 @@ namespace SalaryManagement.Infrastructure.Repositories
       {
       }
 
+      //Get TaxYear By Id
+      public TaxYear GetTaxYearById(int id)
+         => context.TaxYears.Where(year => year.Id == id).FirstOrDefault();
+
       //AllTaxYear
       public IEnumerable<SelectListItem> GetAllTaxYear()
       {
@@ -65,7 +69,7 @@ namespace SalaryManagement.Infrastructure.Repositories
       }
 
       //Total Earning of an employee with overtime.
-      public decimal ToatalEarnings(decimal overtimeEarnigns, decimal contractualEarnings)
+      public decimal TotalEarnings(decimal overtimeEarnigns, decimal contractualEarnings)
       {
          return overtimeEarnigns + contractualEarnings;
       }
