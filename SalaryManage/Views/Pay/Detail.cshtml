@@ -1,0 +1,202 @@
+﻿@using SalaryManage.Domain.ViewModel;
+@model PaymentRecordDetail
+
+@{
+   ViewBag.Title = "Detail";
+}
+
+<!-- Pay Detail content -->
+<div class="container-fluid pt-4 px-4">
+   <div class="theme-bg-secondary theme-font-color text-center rounded p-4">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+         <h6 class="mb-0">@Model.FullName Pay Record Detail</h6>
+      </div>
+
+      <div class="paymentDetail text-start">
+         <div class="row mb-2">
+
+            <div class="col-sm-6">
+
+               <div class="row mb-3">
+                  <div class="col-sm-6">
+                     <input asp-for="Id" hidden />
+                     <p> @Html.DisplayNameFor(Model => Model.EmployeeId)</p>
+                  </div>
+                  <div class="col-sm-6">
+                     <p>@Html.DisplayFor(model => model.EmployeeId)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-6">
+                     <p> @Html.DisplayNameFor(Model => Model.NiNo)</p>
+                  </div>
+                  <div class="col-sm-6">
+                     <p>@Html.DisplayFor(model => model.NiNo)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-6">
+                     <p> @Html.DisplayNameFor(Model => Model.PayMonth)</p>
+                  </div>
+
+                  <div class="col-sm-6">
+                     <p>@Html.DisplayFor(model => model.PayMonth)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-6">
+                     <p> @Html.DisplayNameFor(Model => Model.Year)</p>
+                  </div>
+                  <div class="col-sm-6">
+                     <p>@Html.DisplayFor(model => model.Year)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-6">
+                     <p> @Html.DisplayNameFor(Model => Model.HourlyRate)</p>
+                  </div>
+                  <div class="col-sm-6">
+                     <p>@Html.DisplayFor(model => model.HourlyRate)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-6">
+                     <p> @Html.DisplayNameFor(Model => Model.ContractualHours)</p>
+                  </div>
+                  <div class="col-sm-6">
+                     <p>@Html.DisplayFor(model => model.ContractualHours)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-6">
+                     <p> @Html.DisplayNameFor(Model => Model.ContractualEarnings)</p>
+                  </div>
+                  <div class="col-sm-6">
+                     <p>@Html.DisplayFor(model => model.ContractualEarnings)</p>
+                  </div>
+               </div>               
+
+               <div class="row mb-3">
+                  <div class="col-sm-6">
+                     <p> @Html.DisplayNameFor(Model => Model.Tax)</p>
+                  </div>
+                  <div class="col-sm-6">
+                     <p>@Html.DisplayFor(model => model.Tax)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-6">
+                     <p> @Html.DisplayNameFor(Model => Model.NIC)</p>
+                  </div>
+                  <div class="col-sm-6">
+                     <p>@Html.DisplayFor(model => model.NIC)</p>
+                  </div>
+               </div>
+            </div>
+            <div class="col-sm-6">
+
+               <div class="row mb-3">
+                  <div class="col-sm-6">
+                     <p> @Html.DisplayNameFor(Model => Model.FullName)</p>
+                  </div>
+                  <div class="col-sm-6">
+                     <p>@Html.DisplayFor(model => model.FullName)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-6">
+                     <p> @Html.DisplayNameFor(Model => Model.PayDate)</p>
+                  </div>
+                  <div class="col-sm-6">
+                     <p>@Html.DisplayFor(model => model.PayDate)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-6">
+                     <p> @Html.DisplayNameFor(Model => Model.TaxYearId)</p>
+                  </div>
+                  <div class="col-sm-6">
+                     <p>@Html.DisplayFor(model => model.TaxYearId)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-6">
+                     <p> @Html.DisplayNameFor(Model => Model.TaxCode)</p>
+                  </div>
+                  <div class="col-sm-6">
+                     <p>@Html.DisplayFor(model => model.TaxCode)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-6">
+                     <p> @Html.DisplayNameFor(Model => Model.HoursWorked)</p>
+                  </div>
+                  <div class="col-sm-6">
+                     <p>@Html.DisplayFor(model => model.HoursWorked)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-6">
+                     <p> @Html.DisplayNameFor(Model => Model.OvertimeRate)</p>
+                  </div>
+                  <div class="col-sm-6">
+                     <p>@Html.DisplayFor(model => model.OvertimeRate)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-6">
+                     <p> @Html.DisplayNameFor(Model => Model.OvertimeEarnings)</p>
+                  </div>
+                  <div class="col-sm-6">
+                     <p>@Html.DisplayFor(model => model.OvertimeEarnings)</p>
+                  </div>
+               </div>
+
+@*               <div class="row mb-3">
+                  <div class="col-sm-6">
+                     <p> @Html.DisplayNameFor(Model => Model.Tax)</p>
+                  </div>
+                  <div class="col-sm-6">
+                     <p>@Html.DisplayFor(model => model.Tax)</p>
+                  </div>
+               </div>*@
+
+               <div class="row mb-3">
+                  <div class="col-sm-6">
+                     <p> @Html.DisplayNameFor(Model => Model.TotalEarnings)</p>
+                  </div>
+                  <div class="col-sm-6">
+                     <p>@Html.DisplayFor(model => model.TotalEarnings)</p>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-6">
+                     <p> @Html.DisplayNameFor(Model => Model.NetPayment)</p>
+                  </div>
+                  <div class="col-sm-6">
+                     <p>@Html.DisplayFor(model => model.NetPayment)</p>
+                  </div>
+               </div>
+
+            </div>
+
+         </div>
+         <a asp-action="Index" class="btn btn-primary"><i class="fas fa-caret-square-left"></i> &nbsp;Back </a>
+      </div>
+   </div>
+</div>
+<!-- Employee content -->

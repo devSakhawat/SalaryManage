@@ -1,13 +1,7 @@
 ﻿using SalaryManage.Domain.Entity;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
-namespace SalaryManagement.Domain.ViewModel
+namespace SalaryManage.Domain.ViewModel
 {
    public class PaymentRecordDetail
    {
@@ -26,7 +20,7 @@ namespace SalaryManagement.Domain.ViewModel
       public string Year { get; set; }
       public TaxYear TaxYear { get; set; }
       [Display(Name = "Tax Code")]
-      public string TaxCode { get; set; }
+      public string? TaxCode { get; set; }
       [Display(Name = "Hourly Rate")]
       public decimal HourlyRate { get; set; }
       [Display(Name = "Hours Worked")]

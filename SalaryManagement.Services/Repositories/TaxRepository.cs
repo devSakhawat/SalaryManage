@@ -1,12 +1,7 @@
-﻿using SalaryManage.Data;
-using SalaryManagement.Infrastructure.Constracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SalaryManage.DAL;
+using SalaryManage.Infrastructure.Constracts;
 
-namespace SalaryManagement.Infrastructure.Repositories
+namespace SalaryManage.Infrastructure.Repositories
 {
    public class TaxRepository : ITaxRepository
    {
@@ -20,7 +15,7 @@ namespace SalaryManagement.Infrastructure.Repositories
 
       public decimal TaxAmount(decimal totalAmount)
       {
-         
+
          if (totalAmount <= 1042)
          {
             // Tax Free Rate up to 1042

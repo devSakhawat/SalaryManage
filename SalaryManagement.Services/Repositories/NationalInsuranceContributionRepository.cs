@@ -1,7 +1,7 @@
-﻿using SalaryManage.Data;
-using SalaryManagement.Infrastructure.Constracts;
+﻿using SalaryManage.Infrastructure.Constracts;
+using SalaryManage.DAL;
 
-namespace SalaryManagement.Infrastructure.Repositories
+namespace SalaryManage.Infrastructure.Repositories
 {
    public class NationalInsuranceContributionRepository : INationalInsuranceContributionRepository
    {
@@ -31,7 +31,7 @@ namespace SalaryManagement.Infrastructure.Repositories
          {
             // Above Upper Earnings
             NIRate = 0.02m;
-            NIC = ((4167 - 719) * 0.12m) + ((totalAmount - 4167));
+            NIC = ((4167 - 719) * 0.12m) + ((totalAmount - 4167) * NIRate);
          }
          return NIC;
       }

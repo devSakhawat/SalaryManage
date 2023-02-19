@@ -1,7 +1,7 @@
-﻿using SalaryManage.Data;
-using SalaryManagement.Infrastructure.Constracts;
+﻿using SalaryManage.Infrastructure.Constracts;
+using SalaryManage.DAL;
 
-namespace SalaryManagement.Infrastructure.Repositories
+namespace SalaryManage.Infrastructure.Repositories
 {
    public class UnitOfWork : IUnitOfWork
    {
@@ -70,7 +70,7 @@ namespace SalaryManagement.Infrastructure.Repositories
             if (taxRepository == null)
                taxRepository = new TaxRepository(context);
 
-            return TaxRepository;
+            return taxRepository;
          }
       }
       #endregion
@@ -88,5 +88,6 @@ namespace SalaryManagement.Infrastructure.Repositories
          }
       }
       #endregion
+      
    }
 }

@@ -1,7 +1,7 @@
 ﻿using SalaryManage.Domain.Entity;
 using System.ComponentModel.DataAnnotations;
 
-namespace SalaryManagement.Domain.ViewModel
+namespace SalaryManage.Domain.ViewModel
 {
    public class PaymentRecordIndex
    {

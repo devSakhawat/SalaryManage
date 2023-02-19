@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace SalaryManagement.Infrastructure.Constracts
+namespace SalaryManage.Infrastructure.Constracts
 {
    public interface IRepository<T>
    {

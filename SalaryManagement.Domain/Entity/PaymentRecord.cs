@@ -17,6 +17,8 @@ namespace SalaryManage.Domain.Entity
       [ForeignKey("TaxYear")]
       public int TaxYearId { get; set; }
       public TaxYear TaxYear { get; set; }
+
+      // null able for inserting data. it must be not nullable property.
       public string TaxCode { get; set; }
       [Column(TypeName = "money")]
       public decimal HourlyRate { get; set; }

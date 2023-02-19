@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using SalaryManage.Data;
 using SalaryManage.Domain.Entity;
-using SalaryManagement.Infrastructure.Constracts;
+using SalaryManage.Infrastructure.Constracts;
+using SalaryManage.DAL;
 
-namespace SalaryManagement.Infrastructure.Repositories
+namespace SalaryManage.Infrastructure.Repositories
 {
    public class PayComputeRepository : Repository<PaymentRecord>, IPayComputeRepository
    {
@@ -57,7 +57,7 @@ namespace SalaryManagement.Infrastructure.Repositories
       // OverTimeEarning Calculation
       public decimal OverTimeEarnings(decimal overtimeRate, decimal overtimeHours)
       {
-         return overtimeHours * overtimeRate;
+         return  overtimeRate * overtimeHours;
       }
 
       // Contractual Earning Calculation

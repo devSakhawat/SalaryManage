@@ -1,0 +1,29 @@
+﻿@using SalaryManage.Domain.ViewModel
+@model TaxYearCreate
+
+
+<!-- Tax Year content -->
+<div class="container-fluid pt-4 px-4">
+   <div class="row g-4">
+      <div class="col-sm-12 col-xl-12">
+         <div class="theme-bg-secondary theme-font-color rounded h-100 p-4">
+            <h6 class="mb-4">Update Tax Year</h6>
+            <form method="post" asp-action="Create" class="taxCreate">
+
+               <div class="row mb-3">
+                  <label for="taxYear" class="col-sm-2 col-form-label" asp-for="YearOfTax"></label>
+                  <div class="col-sm-10">
+                     <input asp-for="Id" hidden />
+                     <input type="text" class="form-control theme-black" id="yearOfTax" asp-for="YearOfTax" placeholder="Enter Year of Tax.." />
+                     <span asp-validation-for="YearOfTax" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <button type="submit" class="btn btn-success me-3 mb-3"><i class="fas fa-plus-square"></i> &nbsp;Save </button>
+               <a asp-action="Index" class="btn btn-primary me-3 mb-3"><i class="fas fa-caret-square-left"></i> &nbsp;Back </a>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- Tax Year content -->

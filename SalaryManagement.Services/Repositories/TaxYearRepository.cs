@@ -1,13 +1,14 @@
-﻿using SalaryManage.Data;
+﻿using SalaryManage.DAL;
 using SalaryManage.Domain.Entity;
-using SalaryManagement.Infrastructure.Constracts;
+using SalaryManage.Infrastructure.Constracts;
 
-namespace SalaryManagement.Infrastructure.Repositories
+namespace SalaryManage.Infrastructure.Repositories
 {
    public class TaxYearRepository : Repository<TaxYear>, ITaxYearRepository
    {
       public TaxYearRepository(ApplicationDbContext context) : base(context)
       {
       }
+
    }
 }

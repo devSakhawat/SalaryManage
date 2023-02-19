@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SalaryManage.Data;
-using SalaryManagement.Infrastructure.Constracts;
+using SalaryManage.Infrastructure.Constracts;
+using SalaryManage.DAL;
 using System.Linq.Expressions;
 
-namespace SalaryManagement.Infrastructure.Repositories
+namespace SalaryManage.Infrastructure.Repositories
 {
    public class Repository<T> : IRepository<T> where T : class
    {

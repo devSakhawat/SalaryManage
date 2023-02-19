@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using SalaryManage.Data;
+using Microsoft.EntityFrameworkCore;
 using SalaryManage.Domain.Entity;
-using SalaryManagement.Infrastructure.Constracts;
+using SalaryManage.Infrastructure.Constracts;
+using SalaryManage.DAL;
 
-namespace SalaryManagement.Infrastructure.Repositories
+namespace SalaryManage.Infrastructure.Repositories
 {
    public class EmployeeRepository : Repository<Employee>, IEmployeeRepository
    {
       private decimal studentLoanAmount;
+      //private ApplicationDbContext context;
 
       public EmployeeRepository(ApplicationDbContext context) : base(context)
       {
@@ -15,12 +17,12 @@ namespace SalaryManagement.Infrastructure.Repositories
 
       public IEnumerable<Employee> GetEmployees()
       {
-         return context.Employees.Where(e => e.IsDeleted == false);
+         return context.Employees.Where(e => e.IsDeleted == false).AsNoTracking().OrderBy(e => e.FullName);
       }
 
-      public decimal StudentLoadnRepaymentAmout(int id, decimal totalAmount)
+      public decimal StudentLoanRepaymentAmout(int id, decimal totalAmount)
       {
-        var employee = GetById(id);
+         var employee = GetById(id);
          if (employee.StudentLoan == StudentLoan.Yes && totalAmount > 1750 && totalAmount < 2000 )
          {
             studentLoanAmount = 15m;

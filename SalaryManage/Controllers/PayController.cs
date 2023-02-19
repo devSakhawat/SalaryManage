@@ -1,17 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Web;
+using Microsoft.AspNetCore.Mvc;
 using SalaryManage.Domain.Entity;
-using SalaryManagement.Domain.ViewModel;
-using SalaryManagement.Infrastructure.Constracts;
+using SalaryManage.Domain.ViewModel;
+using SalaryManage.Infrastructure.Constracts;
 
 namespace SalaryManage.Controllers
 {
    public class PayController : Controller
    {
       private readonly IUnitOfWork context;
-      private decimal overtimeHrs;
-      private decimal overtimeErns;
-      private decimal contractualErns;
-      private decimal totalErns;
+      private decimal overtimeHours;
+      private decimal overtimeEarnings;
+      private decimal contractualEarnings;
+      private decimal totalEarnings;
       private decimal tax;
       private decimal unionFee;
       private decimal studentLoan;
@@ -23,23 +24,23 @@ namespace SalaryManage.Controllers
          this.context = context;
       }
 
-      #region PaymentRecordCreate
+      #region Payment RecordCreate
       [HttpGet]
       public IActionResult Create()
       {
          ViewBag.employees = context.EmployeeRepository.GetAllEmployeesForPayCompute();
          ViewBag.taxYears = context.PayComputeRepository.GetAllTaxYear();
          var model = new PaymentRecordCreate();
-         return View();
+         return View(model);
       }
 
       [HttpPost]
       [ValidateAntiForgeryToken]
       public async Task<IActionResult> Create(PaymentRecordCreate model)
-      {
-         if (ModelState.IsValid) 
+      {         
+         if (ModelState.IsValid)
          {
-            var payRecord = new PaymentRecord()
+            var paymentRecord = new PaymentRecord()
             {
                Id = model.Id,
                EmployeeId = model.EmployeeId,
@@ -52,28 +53,30 @@ namespace SalaryManage.Controllers
                HourlyRate = model.HourlyRate,
                HoursWorked = model.HoursWorked,
                ContractualHours = model.ContractualHours,
-               OvertimeHours = overtimeHrs = context.PayComputeRepository.OverTimeHours(model.HoursWorked, model.ContractualHours),
-               ContractualEarnings = contractualErns = context.PayComputeRepository.ContractualEarnings(model.ContractualHours, model.HoursWorked, model.HourlyRate),
-               OvertimeEarnings = overtimeErns = context.PayComputeRepository.OverTimeEarnings(context.PayComputeRepository.OverTimeRate(model.HourlyRate), overtimeHrs),
-               TotalEarnings = totalErns = context.PayComputeRepository.TotalEarnings(contractualErns, overtimeErns),
-               Tax = tax = context.TaxRepository.TaxAmount(totalErns),
+               OvertimeHours = overtimeHours = context.PayComputeRepository.OverTimeHours(model.HoursWorked, model.ContractualHours),
+               ContractualEarnings = contractualEarnings = context.PayComputeRepository.ContractualEarnings(model.ContractualHours, model.HoursWorked, model.HourlyRate),
+               OvertimeEarnings = overtimeEarnings = context.PayComputeRepository.OverTimeEarnings(context.PayComputeRepository.OverTimeRate(model.HourlyRate), overtimeHours),
+               TotalEarnings = totalEarnings = context.PayComputeRepository.TotalEarnings(contractualEarnings, overtimeEarnings),
+               Tax = tax = context.TaxRepository.TaxAmount(totalEarnings),
                UnionFee = unionFee = context.EmployeeRepository.UnionFees(model.EmployeeId),
-               SLC = studentLoan = context.EmployeeRepository.StudentLoadnRepaymentAmout(model.EmployeeId, totalErns),
-               NIC = nationalInsurance = context.NationalInsuranceContributionRepository.NiContribution(totalErns),
+               SLC = studentLoan = context.EmployeeRepository.StudentLoanRepaymentAmout(model.EmployeeId, totalEarnings),
+               NIC = nationalInsurance = context.NationalInsuranceContributionRepository.NiContribution(totalEarnings),
                TotalDeduction = totalDeduction = context.PayComputeRepository.TotalDeduction(tax, nationalInsurance, studentLoan, unionFee),
-               NetPayment = context.PayComputeRepository.NetPay(totalErns, totalDeduction)
+               NetPayment = context.PayComputeRepository.NetPay(totalEarnings, totalDeduction),
+               CreatedDate = DateTime.UtcNow
             };
-            context.PayComputeRepository.Add(payRecord);
+
+            context.PayComputeRepository.Add(paymentRecord);
             await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
          }
          ViewBag.employees = context.EmployeeRepository.GetAllEmployeesForPayCompute();
          ViewBag.taxYears = context.PayComputeRepository.GetAllTaxYear();
-         return View();
+         return View(model);
       }
       #endregion
 
-      #region PaymentRecordIndex
+      #region Payment Record Index
       public IActionResult Index()
       {
          var payRecord = context.PayComputeRepository.GetPaymentRecords().Select(pay => new PaymentRecordIndex 
@@ -95,7 +98,7 @@ namespace SalaryManage.Controllers
       }
       #endregion
 
-      #region PaymentRecordDetail
+      #region Payment Record Detail
       [HttpGet]
       public IActionResult Detail(int id)
       {
@@ -171,12 +174,20 @@ namespace SalaryManage.Controllers
             NetPayment = paymentRecord.NetPayment
          };
 
-         return View();
+         return View(model);
       }
       #endregion
 
-
-
-
+      #region GeneratePdf
+      //public async Task<IActionResult> GeneratePayslipPdf(int id)
+      //{
+      //   var paymentRecord = await context.PayComputeRepository.FirstOrDefaultAsync(p => p.Id == id);
+      //   var payslip = new ActionAsPdf("Payslip", new { id = id })
+      //   {
+      //      FileName = paymentRecord.NiNo + ".pdf"
+      //   };
+      //   return payslip;
+      //}
+      #endregion
    }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace SalaryManagement.DAL.Migrations
+namespace SalaryManage.DAL.Migrations
 {
     public partial class ChangeBaseModel : Migration
     {

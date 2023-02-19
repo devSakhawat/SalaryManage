@@ -1,6 +1,6 @@
 ﻿using SalaryManage.Domain.Entity;
 
-namespace SalaryManagement.Infrastructure.Constracts
+namespace SalaryManage.Infrastructure.Constracts
 {
    public interface ITaxYearRepository : IRepository<TaxYear>
    {

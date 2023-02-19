@@ -1,5 +1,5 @@
 ﻿@using SalaryManage.Domain.ViewModel;
-@model IEnumerable<EmployeeIndex>
+@model Pagination<EmployeeIndex>
 
 @{
    ViewBag.Title = "Employee";
@@ -13,7 +13,7 @@
          <a class="theme-anchor" asp-controller="Employee" asp-action="Create">Add New Employee</a>
       </div>
       <div class="table-responsive">
-         <table class="table text-start align-middle table-bordered table-hover mb-0">
+         <table class="table text-start align-middle table-bordered table-hover mb-3">
             <thead>
                <tr class="text-white theme-font-color">
                   <th scope="col"><input class="form-check-input" type="checkbox"></th>
@@ -32,45 +32,61 @@
                {
                   var photoPath = "~/Images/" + item.ImageUrl;
                   <tr>
-                  <td><input class="form-check-input" type="checkbox"></td>
-                  <td>
-                     <a asp-action="Detail" asp-route-Id="@item.Id">@item.EmployeeNo</a>                     
-                     </td>
-                     <td><img src="~/Images/@item.ImageUrl" alt="Photo Not Found" width="50" height="50" /></td>
+                     <td><input class="form-check-input" type="checkbox"></td>
+                     <td>
+                        <a asp-action="Detail" asp-route-Id="@item.Id">@item.EmployeeNo</a>                     
+                        </td>
+                        <td><img src="@item.ImageUrl" alt="Photo Not Found" width="50" height="50" /></td>
                      
-                  <td>@item.FullName</td>
-                  <td>
-                     @if (item.Gender == "1")
-                        {
-                           item.Gender = "Male";
-                        }
-                        else
-                        {
-                           item.Gender = "Female";
-                        }
-                        @item.Gender
-                   </td>
-                  <td>@item.Designation</td>
-                  <td>@item.DateJoined</td>
-                  <td>@item.City</td>
-                  <td>
-                     <a asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-sm btn-primary">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                        Update
-                     </a> 
-                     <a asp-action="Detail" asp-route-Id="@item.Id" class="btn btn-sm btn-success">
-                        <i class="fa-sharp fa-solid fa-circle-info"></i>
-                        Detail
-                     </a> 
-                     <a asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-sm btn-danger">
-                        <i class="fa-solid fa-trash"></i>
-                        Delete
-                     </a>
-                  </td>
-               </tr> 
+                     <td>@item.FullName</td>
+                     <td>
+                        @if (item.Gender == "1")
+                           {
+                              item.Gender = "Male";
+                           }
+                           else
+                           {
+                              item.Gender = "Female";
+                           }
+                           @item.Gender
+                      </td>
+                     <td>@item.Designation</td>
+                     <td>@item.DateJoined</td>
+                     <td>@item.City</td>
+                     <td>
+                        <a asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-sm btn-primary m-1">
+                           <i class="fa-solid fa-pen-to-square"></i>
+                           Update
+                        </a> 
+                        <a asp-action="Detail" asp-route-Id="@item.Id" class="btn btn-sm btn-success m-1">
+                           <i class="fa-sharp fa-solid fa-circle-info"></i>
+                           Detail
+                        </a> 
+                        <a asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-sm btn-danger m-1">
+                           <i class="fa-solid fa-trash"></i>
+                           Delete
+                        </a>
+                     </td>
+                  </tr> 
                }
             </tbody>
          </table>
+         <div class="mt-3">
+            @{
+               var disablePrevious = !Model.IsPreviousPageAvailable ? "disabled" : "";
+               var disableNext = !Model.IsNextPageAvailable ? "disabled" : "";
+            }
+            <a asp-action="Index"
+               asp-route-pageNumber="@(Model.PageIndex - 1)"
+               class="btn btn-primary @disablePrevious">
+               Previous
+            </a>
+            <a asp-action="Index"
+               asp-route-pageNumber="@(Model.PageIndex + 1)"
+               class="btn btn-primary @disableNext">
+               Next
+            </a>
+         </div>         
       </div>
    </div>
 </div>

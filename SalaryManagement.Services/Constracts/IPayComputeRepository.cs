@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using SalaryManage.Domain.Entity;
 
-namespace SalaryManagement.Infrastructure.Constracts
+namespace SalaryManage.Infrastructure.Constracts
 {
    public interface IPayComputeRepository : IRepository<PaymentRecord>
    {

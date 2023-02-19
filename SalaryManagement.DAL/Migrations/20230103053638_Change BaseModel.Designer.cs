@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SalaryManage.Data;
+using SalaryManage.DAL;
 
 #nullable disable
 
-namespace SalaryManagement.DAL.Migrations
+namespace SalaryManage.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20230103053638_Change BaseModel")]

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SalaryManage.Domain.Entity;
 using SalaryManage.Domain.ViewModel;
-using SalaryManagement.Infrastructure.Constracts;
+using SalaryManage.Infrastructure.Constracts;
 
 namespace SalaryManage.Controllers
 {
@@ -36,7 +36,7 @@ namespace SalaryManage.Controllers
                string fileName = "";
                if (model.ImageUrl != null && model.ImageUrl.Length > 0)
                {
-                  string uploadFolder = Path.Combine(hosting.WebRootPath, "Images");
+                  string uploadFolder = Path.Combine(hosting.WebRootPath, @"Images\Employee");
                   if (!Directory.Exists(uploadFolder))
                   {
                      Directory.CreateDirectory(uploadFolder);
@@ -67,7 +67,7 @@ namespace SalaryManage.Controllers
                   Phone = model.Phone,
                   Designation = model.Designation,
                   Passcode = model.Postcode,
-                  ImageUrl = fileName
+                  ImageUrl = @"Images\Employee\" + fileName
                };
                context.EmployeeRepository.Add(employee);
                await context.SaveChangesAsync();
@@ -82,24 +82,8 @@ namespace SalaryManage.Controllers
       #endregion
 
       #region Index
-      public IActionResult Index()
+      public IActionResult Index(int? pageNumber)
       {
-         //var employeeList = await context.EmployeeRepository.QueryAsync(e => e.IsDeleted == false);
-
-         //EmployeeIndex employees = new EmployeeIndex();
-
-         //foreach (var employee in employeeList)
-         //{
-         //   employees.Id = employee.Id;
-         //   employees.EmployeeNo = employee.EmployeeNo;
-         //   employees.FullName = employee.FullName;
-         //   employees.Gender = employee.Gender;
-         //   employees.ImageUrl = employee.ImageUrl;
-         //   employees.DateJoined = employee.DateJoined;
-         //   employees.Designation = employee.Designation;
-         //   employees.City = employee.City;
-         //};
-
          var employees = context.EmployeeRepository.GetEmployees().Select(
             employee => new EmployeeIndex
             {
@@ -112,8 +96,8 @@ namespace SalaryManage.Controllers
                DateJoined = employee.DateJoined,
                ImageUrl = employee.ImageUrl
             }).ToList();
-
-         return View(employees);
+         int pageSize = 4;
+         return View(Pagination<EmployeeIndex>.Create(employees, pageNumber ?? 1, pageSize));
       }
       #endregion
 
@@ -165,7 +149,15 @@ namespace SalaryManage.Controllers
                string fileName = "";
                if (model.ImageUrl != null && model.ImageUrl.Length > 0)
                {
-                  string uploadFolder = Path.Combine(hosting.WebRootPath, "Images");
+                  if (employee.ImageUrl != null)
+                  {
+                     var oldImage = Path.Combine(hosting.WebRootPath, employee.ImageUrl.Trim('\\'));
+                     if (System.IO.File.Exists(oldImage))
+                     {
+                        System.IO.File.Delete(oldImage);
+                     }
+                  }
+                  string uploadFolder = Path.Combine(hosting.WebRootPath, @"Images\Employee");
                   if (!Directory.Exists(uploadFolder))
                   {
                      Directory.CreateDirectory(uploadFolder);
@@ -194,7 +186,7 @@ namespace SalaryManage.Controllers
                employee.Address = model.Address;
                employee.City = model.City;
                employee.Passcode = model.Postcode;
-               employee.ImageUrl = fileName;
+               employee.ImageUrl = @"Images\Employee\" + fileName;
                context.EmployeeRepository.Update(employee);
                await context.SaveChangesAsync();
                return RedirectToAction("Index");
@@ -206,7 +198,7 @@ namespace SalaryManage.Controllers
          }
          return View(model);
       }
-      #endregion edit
+      #endregion edit00
 
       #region Detail
       [HttpGet]
@@ -278,8 +270,13 @@ namespace SalaryManage.Controllers
          var employee = await context.EmployeeRepository.FirstOrDefaultAsync(e => e.Id == model.Id && e.IsDeleted == false);
          if (employee == null)
             return NotFound();
+
+         var oldImage = Path.Combine(hosting.WebRootPath, employee.ImageUrl.Trim('\\'));
+         if (System.IO.File.Exists(oldImage))
+            System.IO.File.Delete(oldImage);
+
          // soft delete
-         employee.IsDeleted = true;
+         //employee.IsDeleted = true;
 
          //// hard delete
          //context.EmployeeRepository.Delete(employee);

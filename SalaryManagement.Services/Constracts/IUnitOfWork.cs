@@ -1,4 +1,4 @@
-﻿namespace SalaryManagement.Infrastructure.Constracts
+﻿namespace SalaryManage.Infrastructure.Constracts
 {
    public interface IUnitOfWork
    {
