@@ -4,11 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SalaryManage.Data;
-
+using SalaryManage.DAL;
 #nullable disable
 
-namespace SalaryManagement.DAL.Migrations
+namespace SalaryManage.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -296,7 +295,7 @@ namespace SalaryManagement.DAL.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("ModifiedBy")
+                    b.Property<int?>("ModifiedBy")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("ModifiedDate")
@@ -330,6 +329,102 @@ namespace SalaryManagement.DAL.Migrations
                     b.ToTable("Employees");
                 });
 
+            modelBuilder.Entity("SalaryManage.Domain.Entity.PaymentRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<decimal>("ContractualEarnings")
+                        .HasColumnType("money");
+
+                    b.Property<decimal>("ContractualHours")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("CreateBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<decimal>("HourlyRate")
+                        .HasColumnType("money");
+
+                    b.Property<decimal>("HoursWorked")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("NIC")
+                        .HasColumnType("money");
+
+                    b.Property<decimal>("NetPayment")
+                        .HasColumnType("money");
+
+                    b.Property<string>("NiNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("OvertimeEarnings")
+                        .HasColumnType("money");
+
+                    b.Property<decimal>("OvertimeHours")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("PayDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PayMonth")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("SLC")
+                        .HasColumnType("money");
+
+                    b.Property<decimal>("Tax")
+                        .HasColumnType("money");
+
+                    b.Property<string>("TaxCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TaxYearId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalDeduction")
+                        .HasColumnType("money");
+
+                    b.Property<decimal>("TotalEarnings")
+                        .HasColumnType("money");
+
+                    b.Property<decimal?>("UnionFee")
+                        .HasColumnType("money");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("TaxYearId");
+
+                    b.ToTable("PaymentRecords");
+                });
+
             modelBuilder.Entity("SalaryManage.Domain.Entity.TaxYear", b =>
                 {
                     b.Property<int>("Id")
@@ -347,7 +442,7 @@ namespace SalaryManagement.DAL.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ModifiedBy")
+                    b.Property<int?>("ModifiedBy")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("ModifiedDate")
@@ -411,6 +506,35 @@ namespace SalaryManagement.DAL.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SalaryManage.Domain.Entity.PaymentRecord", b =>
+                {
+                    b.HasOne("SalaryManage.Domain.Entity.Employee", "Employee")
+                        .WithMany("PaymentRecords")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SalaryManage.Domain.Entity.TaxYear", "TaxYear")
+                        .WithMany("PaymentRecords")
+                        .HasForeignKey("TaxYearId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("TaxYear");
+                });
+
+            modelBuilder.Entity("SalaryManage.Domain.Entity.Employee", b =>
+                {
+                    b.Navigation("PaymentRecords");
+                });
+
+            modelBuilder.Entity("SalaryManage.Domain.Entity.TaxYear", b =>
+                {
+                    b.Navigation("PaymentRecords");
                 });
 #pragma warning restore 612, 618
         }

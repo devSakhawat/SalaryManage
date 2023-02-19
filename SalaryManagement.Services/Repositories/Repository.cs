@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SalaryManage.Data;
-using SalaryManagement.Infrastructure.Constracts;
+using SalaryManage.Infrastructure.Constracts;
+using SalaryManage.DAL;
 using System.Linq.Expressions;
 
-namespace SalaryManagement.Infrastructure.Repositories
+namespace SalaryManage.Infrastructure.Repositories
 {
    public class Repository<T> : IRepository<T> where T : class
    {
@@ -23,6 +23,20 @@ namespace SalaryManagement.Infrastructure.Repositories
       public virtual async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
       {
          return await context.Set<T>().AsNoTracking().FirstOrDefaultAsync(predicate);
+      }
+      #endregion
+
+      #region GetById
+      public T GetById(int id)
+      {
+         return context.Set<T>().Find(id);
+      }
+      #endregion
+
+      #region GetAll
+      public IEnumerable<T> GetAll()
+      {
+         return context.Set<T>().AsQueryable().AsNoTracking().ToList();
       }
       #endregion
 

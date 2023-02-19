@@ -1,0 +1,121 @@
+﻿@using SalaryManage.Domain.ViewModel
+@model PaymentRecordCreate
+@{
+   ViewData["Title"] = "New Payment Record";
+}
+
+<!-- pay content -->
+<div class="container-fluid pt-4 px-4">
+   <div class="row g-4">
+      <div class="col-sm-12 col-xl-12">
+         <div class="theme-bg-secondary theme-font-color rounded h-100 p-4">
+            <h6 class="mb-4">New Employee</h6>
+            <form method="post" enctype="multipart/form-data" asp-action="Create" class="paymentCreate">
+
+               <div class="row mb-3">
+                  <label for="employeeId" class="col-sm-2 col-form-label" asp-for="EmployeeId"></label>
+                  <div class="col-sm-10">
+                     <select class="form-select theme-black" aria-label="Default select example" id="employeeId" asp-for="EmployeeId" asp-items="ViewBag.employees">
+                        <option selected>Select Employee</option>
+                     </select>
+                     <span asp-validation-for="EmployeeId" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="payMonth" class="col-sm-2 col-form-label" asp-for="PayMonth"></label>
+                  <div class="col-sm-10">
+                     <select class="form-select theme-black" aria-label="Default select example" id="payMonth" asp-for="PayMonth">
+                        <option selected>Select Month</option>
+                        <option>January</option>
+                        <option>February</option>
+                        <option>March</option>
+                        <option>April</option>
+                        <option>May</option>
+                        <option>June</option>
+                        <option>July</option>
+                        <option>August</option>
+                        <option>September</option>
+                        <option>October</option>
+                        <option>November</option>
+                        <option>December</option>
+                     </select>
+                     <span asp-validation-for="PayMonth" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="taxYearId" class="col-sm-2 col-form-label" asp-for="TaxYearId"></label>
+                  <div class="col-sm-10">
+                     @*<input asp-for="TaxCode" hidden/>*@
+                     <select class="form-select theme-black" aria-label="Default select example" id="taxYearId" asp-for="TaxYearId" asp-items="ViewBag.taxYears">
+                        <option selected>Select Tax Year</option>                        
+                     </select>
+                     <span asp-validation-for="TaxYearId" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="payDate" class="col-sm-2 col-form-label" asp-for="PayDate"></label>
+                  <div class="col-sm-10">
+                     <input type="date" class="form-control theme-black" id="payDate" asp-for="PayDate" />
+                     <span asp-validation-for="PayDate" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <div class="col-sm-4">
+                     <div class="row">
+                        <label for="hourlyRate" class="col-sm-6 col-form-label" asp-for="HourlyRate"></label>
+                        <div class="col-sm-6">
+                           <input type="text" class="form-control theme-black" id="hourlyRate" asp-for="HourlyRate" placeholder="0.00" />
+                           <span asp-validation-for="HourlyRate" class="text-danger"></span>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div class="col-sm-4">
+                     <div class="row">
+                        <label for="hoursWorked" class="col-sm-6 col-form-label" asp-for="HoursWorked"></label>
+                        <div class="col-sm-6">
+                           <input type="text" class="form-control theme-black" id="hoursWorked" asp-for="HoursWorked" />
+                           <span asp-validation-for="HoursWorked" class="text-danger"></span>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div class="col-sm-4">
+                     <div class="row">
+                        <label for="contractualHours" class="col-sm-6 col-form-label" asp-for="ContractualHours"></label>
+                        <div class="col-sm-6">
+                           <input type="text" class="form-control theme-black" id="contractualHours" asp-for="ContractualHours" />
+                           <span asp-validation-for="ContractualHours" class="text-danger"></span>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+              @* <div class="row mb-3">
+                  <label for="hoursWorked" class="col-sm-2 col-form-label" asp-for="HoursWorked"></label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control theme-black" id="hoursWorked" asp-for="HoursWorked"/>
+                     <span asp-validation-for="HoursWorked" class="text-danger"></span>
+                  </div>
+               </div>
+
+               <div class="row mb-3">
+                  <label for="contractualHours" class="col-sm-2 col-form-label" asp-for="ContractualHours"></label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control theme-black" id="contractualHours" asp-for="ContractualHours"/>
+                     <span asp-validation-for="ContractualHours" class="text-danger"></span>
+                  </div>
+               </div>*@
+
+               <button type="submit" class="btn btn-success me-3 mb-3"><i class="fas fa-plus-square"></i> &nbsp;Calculate &#38; Save </button>
+               <a asp-action="Index" class="btn btn-primary me-3 mb-3"><i class="fas fa-caret-square-left"></i> &nbsp;Back to Payment List</a>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- pay content -->

@@ -1,0 +1,66 @@
+﻿@using SalaryManage.Domain.ViewModel;
+@model IEnumerable<PaymentRecordIndex>
+
+@{
+   ViewBag.Title = "Payment Records";
+}
+
+<!-- Pay content -->
+<div class="container-fluid pt-4 px-4">
+   <div class="theme-bg-secondary theme-font-color text-center rounded p-4">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+         <h6 class="mb-0">Pay List</h6>
+         <a class="theme-anchor" asp-controller="Pay" asp-action="Create">Add Payment Record</a>
+      </div>
+      <div class="table-responsive">
+         <table class="table text-start align-middle table-bordered table-hover mb-0">
+            <thead>
+               <tr class="text-white theme-font-color">
+                  <th scope="col"><input class="form-check-input" type="checkbox"></th>
+                  <th scope="col">Employee</th>
+                  <th scope="col">Pay Date</th>
+                  <th scope="col">Pay Month</th>
+                  <th scope="col">Tax Year</th>
+                  <th scope="col">Total Earning</th>
+                  <th scope="col">Total Deduction</th>
+                  <th scope="col">Net Payment</th>
+                  <th scope="col">Action</th>
+               </tr>
+            </thead>
+            <tbody class="theme-font-color">
+               @foreach (var item in Model)
+               {
+                  <tr>
+                     <td><input class="form-check-input" type="checkbox"></td>
+                     <td>
+                        <a asp-action="Detail" asp-route-id="@item.Id">@item.FullName</a>
+                     </td>
+                     <td>@item.PayDate.ToString("dd/MM/yyyy")</td>
+                     <td>@item.PayMonth</td>
+                     <td>@item.Year</td>
+                     @*for currency*@
+                     <td>@item.TotalEarning.ToString("C")</td>
+                     <td>@item.TotalDeduction.ToString("c")</td>
+                     <td>@item.NetPayment.ToString("C")</td>
+                     <td>
+                        <a asp-action="Detail" asp-route-Id="@item.Id" class="btn btn-sm btn-primary m-1">
+                           <i class="fas fa-file-pdf"></i>
+                           Detail
+                        </a>
+                        <a asp-action="Payslip" asp-route-Id="@item.Id" class="btn btn-sm btn-success m-1">
+                           <i class="fas fa-bars"></i>
+                           Preview Payslip
+                        </a>
+                        <a asp-action="PrintPayslip" asp-route-Id="@item.Id" class="btn btn-sm btn-primary m-1">
+                           <i class="fas fa-file-pdf"></i>
+                           Print Payslip
+                        </a>
+                     </td>
+                  </tr>
+               }
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>
+<!-- Pay content -->

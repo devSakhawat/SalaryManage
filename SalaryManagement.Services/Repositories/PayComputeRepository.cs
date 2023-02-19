@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using SalaryManage.Data;
 using SalaryManage.Domain.Entity;
-using SalaryManagement.Infrastructure.Constracts;
+using SalaryManage.Infrastructure.Constracts;
+using SalaryManage.DAL;
 
-namespace SalaryManagement.Infrastructure.Repositories
+namespace SalaryManage.Infrastructure.Repositories
 {
    public class PayComputeRepository : Repository<PaymentRecord>, IPayComputeRepository
    {
@@ -12,6 +12,10 @@ namespace SalaryManagement.Infrastructure.Repositories
       public PayComputeRepository(ApplicationDbContext context) : base(context)
       {
       }
+
+      //Get TaxYear By Id
+      public TaxYear GetTaxYearById(int id)
+         => context.TaxYears.Where(year => year.Id == id).FirstOrDefault();
 
       //AllTaxYear
       public IEnumerable<SelectListItem> GetAllTaxYear()
@@ -22,6 +26,12 @@ namespace SalaryManagement.Infrastructure.Repositories
             Value = taxYears.Id.ToString()
          });
          return allTaxYear;
+      }
+
+      // All Payment Record
+      public IEnumerable<PaymentRecord> GetPaymentRecords()
+      {
+         return context.PaymentRecords.Where(pr => pr.IsDeleted == false);
       }
 
       // OverTimeHours calculation = Total(hoursWorked) - Total(contractualHours)
@@ -47,7 +57,7 @@ namespace SalaryManagement.Infrastructure.Repositories
       // OverTimeEarning Calculation
       public decimal OverTimeEarnings(decimal overtimeRate, decimal overtimeHours)
       {
-         return overtimeHours * overtimeRate;
+         return  overtimeRate * overtimeHours;
       }
 
       // Contractual Earning Calculation
@@ -65,7 +75,7 @@ namespace SalaryManagement.Infrastructure.Repositories
       }
 
       //Total Earning of an employee with overtime.
-      public decimal ToatalEarnings(decimal overtimeEarnigns, decimal contractualEarnings)
+      public decimal TotalEarnings(decimal overtimeEarnigns, decimal contractualEarnings)
       {
          return overtimeEarnigns + contractualEarnings;
       }
