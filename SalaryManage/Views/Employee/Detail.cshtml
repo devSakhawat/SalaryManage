@@ -1,9 +1,9 @@
 ﻿@using SalaryManage.Domain.ViewModel;
 @model EmployeeDetail
 
-@{
+@*@{
    ViewBag.Title = "Detail";
-}
+}*@
 <style>
    .imgUrl p {
        display: flex;
@@ -176,7 +176,9 @@
                      <p> @Html.DisplayNameFor(Model => Model.ImageUrl)</p>
                   </div>
                   <div class="col-sm-8">
-                     <img src="~/Images/@Model.ImageUrl" class="img-thumbnail" alt="Photo Not Found" width="80%" />
+                     @*<img src="~/Images/@Model.ImageUrl" class="img-thumbnail" alt="Photo Not Found" width="80%" />*@
+                     @*<img src="@Model.ImageUrl" class="img-thumbnail" alt="Photo Not Found" width="80%" />*@
+                     <img src="@Model.ImageUrl" alt="@Model.FullName" width="50" height="50" />
                   </div>
                </div>
             
