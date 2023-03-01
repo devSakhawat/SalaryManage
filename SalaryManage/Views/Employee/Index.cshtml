@@ -32,11 +32,13 @@
                {
                   var photoPath = "~/Images/" + item.ImageUrl;
                   <tr>
-                     <td><input class="form-check-input" type="checkbox"></td>
+                     <td>
+                        <input class="form-check-input" type="checkbox">
+                     </td>
                      <td>
                         <a asp-action="Detail" asp-route-Id="@item.Id">@item.EmployeeNo</a>                     
-                        </td>
-                        <td><img src="@item.ImageUrl" alt="Photo Not Found" width="50" height="50" /></td>
+                     </td>
+                     <td><img src="@item.ImageUrl" alt="Photo Not Found" width="50" height="50" /></td>
                      
                      <td>@item.FullName</td>
                      <td>

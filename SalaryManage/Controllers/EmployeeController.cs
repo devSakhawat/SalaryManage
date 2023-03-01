@@ -279,8 +279,8 @@ namespace SalaryManage.Controllers
          //employee.IsDeleted = true;
 
          //// hard delete
-         //context.EmployeeRepository.Delete(employee);
-         context.EmployeeRepository.Update(employee);
+         context.EmployeeRepository.Delete(employee);
+         //context.EmployeeRepository.Update(employee);
          await context.SaveChangesAsync();
          return RedirectToAction(nameof(Index));
       }
